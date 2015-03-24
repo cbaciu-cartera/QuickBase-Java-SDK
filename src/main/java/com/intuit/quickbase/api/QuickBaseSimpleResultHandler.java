@@ -1,6 +1,14 @@
-/**
- * 
+/*
+ * Copyright (c) 2009 Intuit Inc. All Rights reserved.
+ * -------------------------------------------------------------------------------------------------
+ *
+ * File name  : QuickBaseSimpleResultHandler.java
+ * -------------------------------------------------------------------------------------------------
+ *
+ *
+ * *************************************************************************************************
  */
+
 package com.intuit.quickbase.api;
 
 import java.util.ArrayList;
@@ -16,57 +24,57 @@ import java.util.List;
  */
 public class QuickBaseSimpleResultHandler implements QuickBaseResultHandler {
 
-	private List<QuickBaseRecord> records;
-	private boolean done;
-	private QuickBaseException exception;
-	
-	private Object lock;
-	
-	
-	public QuickBaseSimpleResultHandler() {
-		records = new ArrayList<QuickBaseRecord>();
-		done = false;
-		lock = new Object();
-		exception = null;
-	}
+    private List<QuickBaseRecord> records;
+    private boolean done;
+    private QuickBaseException exception;
+    
+    private Object lock;
+    
+    
+    public QuickBaseSimpleResultHandler() {
+        records = new ArrayList<QuickBaseRecord>();
+        done = false;
+        lock = new Object();
+        exception = null;
+    }
 
-	@Override
-	public void handleRecord(QuickBaseRecord record) {
-		synchronized(lock) {
-			records.add(record);
-		}
-	}
+    @Override
+    public void handleRecord(QuickBaseRecord record) {
+        synchronized(lock) {
+            records.add(record);
+        }
+    }
 
-	
-	@Override
-	public void handleException(QuickBaseException exception) {
-		synchronized(lock) {
-			this.exception = exception;
-		}
-	}
+    
+    @Override
+    public void handleException(QuickBaseException exception) {
+        synchronized(lock) {
+            this.exception = exception;
+        }
+    }
 
-	@Override
-	public void done() {
-		synchronized(lock) {
-			done = true;
-		}
-	}
+    @Override
+    public void done() {
+        synchronized(lock) {
+            done = true;
+        }
+    }
 
-	public List<QuickBaseRecord> getRecords() {
-		synchronized(lock) {
-			return records;
-		}
-	}
+    public List<QuickBaseRecord> getRecords() {
+        synchronized(lock) {
+            return records;
+        }
+    }
 
-	public boolean isDone() {
-		synchronized(lock) {
-			return done;
-		}
-	}
-	
-	public QuickBaseException getException() {
-		synchronized(lock) {
-			return this.exception;
-		}
-	}
+    public boolean isDone() {
+        synchronized(lock) {
+            return done;
+        }
+    }
+    
+    public QuickBaseException getException() {
+        synchronized(lock) {
+            return this.exception;
+        }
+    }
 }

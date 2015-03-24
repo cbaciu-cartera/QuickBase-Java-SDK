@@ -36,12 +36,14 @@ public class QuickBase
      * Obtains a new {@link QuickBaseConnection} using the global authenticator that was set by
      * calling {@link #setAuthenticator(QuickBaseAuthenticator)}.
      *
+     * @param qbDomain the QuickBase domain for this connection
+     * @param httpProtocol the HTTP protocol to use (http or https) for this connection
      * @return a new {@link QuickBaseConnection}
      * @throws QuickBaseException if the connection to the database could not be established
      */
-    public static QuickBaseConnection getConnection() throws QuickBaseException
+    public static QuickBaseConnection getConnection(String qbDomain, String httpProtocol) throws QuickBaseException
     {
-        return getConnection(authenticator);
+        return getConnection(getAuthenticator(), qbDomain, httpProtocol);
     }
 
     /**
@@ -49,17 +51,19 @@ public class QuickBase
      * {@link #setAuthenticator(QuickBaseAuthenticator)}.
      *
      * @param qba the {@link QuickBaseAuthenticator}
+     * @param qbDomain the QuickBase domain for this connection
+     * @param httpProtocol the HTTP protocol to use (http or https) for this connection
      * @return a new {@link QuickBaseConnection}
      * @throws QuickBaseException if the connection to the database could not be established
      */
-    public static QuickBaseConnection getConnection(QuickBaseAuthenticator qba)
+    public static QuickBaseConnection getConnection(QuickBaseAuthenticator qba, String qbDomain, String httpProtocol)
     throws QuickBaseException
     {
         if (qba == null)
         {
             throw new QuickBaseException("no QuickBaseAuthenticator specified"); //$NON-NLS-1$
         }
-        return new QuickBaseConnection(qba.login());
+        return new QuickBaseConnection(qba.login(), qbDomain, httpProtocol);
     }
 
     /**
@@ -68,7 +72,7 @@ public class QuickBase
      *
      * @return the {@link QuickBaseAuthenticator}, or <code>null</code> if none was set
      */
-    public static QuickBaseAuthenticator getAuthenticator()
+    public synchronized static QuickBaseAuthenticator getAuthenticator()
     {
         return authenticator;
     }
@@ -79,7 +83,7 @@ public class QuickBase
      *
      * @param authenticator the global {@link QuickBaseAuthenticator} to be used
      */
-    public static void setAuthenticator(QuickBaseAuthenticator authenticator)
+    public synchronized static void setAuthenticator(QuickBaseAuthenticator authenticator)
     {
         QuickBase.authenticator = authenticator;
     }

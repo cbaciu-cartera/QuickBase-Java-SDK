@@ -32,12 +32,12 @@ import org.w3c.dom.Node;
  */
 public class QuickBaseSchema
 {
-	private QuickBaseDatabase database;
+    private QuickBaseDatabase database;
     private Node schema;
 
     QuickBaseSchema(QuickBaseDatabase database, Node schema)
     {
-    	this.database = database;
+        this.database = database;
         this.schema = schema;
     }
 
@@ -57,7 +57,7 @@ public class QuickBaseSchema
             
             String tableId = (String)QuickBaseXPath.TABLE_ID.evaluate(schema, XPathConstants.STRING);
             if (tableId == null) {
-            	throw new QuickBaseException("Unable to determine table id for table " + tableName);
+                throw new QuickBaseException("Unable to determine table id for table " + tableName);
             }
             
             return new QuickBaseTable(database, table, tableId);
@@ -72,9 +72,9 @@ public class QuickBaseSchema
     /**
      * Returns the {@link QuickBaseDatabase} that owns this schema.
      */
-	public QuickBaseDatabase getDatabase() {
-		return database;
-	}
+    public QuickBaseDatabase getDatabase() {
+        return database;
+    }
     
     
 }

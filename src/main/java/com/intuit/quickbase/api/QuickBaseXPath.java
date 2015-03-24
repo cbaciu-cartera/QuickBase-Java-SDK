@@ -28,8 +28,13 @@ import javax.xml.xpath.XPathFactory;
  * @author Mirko Raner
  * @version $Revision: 13 $ $Change: 714052 $
  */
-class QuickBaseXPath
+public class QuickBaseXPath
 {
+    /*//TODO: Move this to child class...
+     *//** The pre-compiled {@link XPathExpression} "<code>qdbapi/ticket</code>". **//*
+    public final static XPathExpression TICKET = compile("qdbapi/ticket"); //$NON-NLS-1$
+    */
+    
     private final static XPath XPATH = XPathFactory.newInstance().newXPath();
     private final static String FORMAT_TABLE = "table[name=''{0}'']"; //$NON-NLS-1$
     private final static String FORMAT_FIELDS_FIELD = "fields/field[label=''{0}'']"; //$NON-NLS-1$
@@ -45,7 +50,16 @@ class QuickBaseXPath
 
     /** The pre-compiled {@link XPathExpression} "<code>qdbapi/errtext</code>". **/
     public final static XPathExpression QDBAPI_ERRTEXT = compile("qdbapi/errtext"); //$NON-NLS-1$
-
+    
+    /** The pre-compiled {@link XPathExpression} "<code>qdbapi/ticket</code>". **/
+    public final static XPathExpression QDBAPI_TICKET = compile("qdbapi/ticket"); //$NON-NLS-1$
+    
+    /** The pre-compiled {@link XPathExpression} "<code>qdbapi/rid</code>". **/
+    public final static XPathExpression QDBAPI_RID = compile("qdbapi/rid"); //$NON-NLS-1$
+    
+    /** The pre-compiled {@link XPathExpression} "<code>qdbapi/record</code>". **/
+    public final static XPathExpression QDBAPI_RECORD = compile("qdbapi/record"); //$NON-NLS-1$
+    
     /** The pre-compiled XPath {@link Format} "<code>fields/field[label=''{0}'']</code>". **/
     public final static Format FIELDS_FIELD_LABEL = new MessageFormat(FORMAT_FIELDS_FIELD);
 

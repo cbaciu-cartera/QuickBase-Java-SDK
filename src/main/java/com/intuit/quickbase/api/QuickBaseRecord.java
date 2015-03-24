@@ -30,7 +30,7 @@ public class QuickBaseRecord
 {
     private Map<Integer, String> recordData;
 
-    QuickBaseRecord()
+    protected QuickBaseRecord()
     {
         recordData = new HashMap<Integer, String>();
     }

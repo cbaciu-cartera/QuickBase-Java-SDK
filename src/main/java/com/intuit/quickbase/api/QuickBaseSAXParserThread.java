@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
  * @author Mirko Raner
  * @version $Revision: 13 $ $Change: 714052 $
  */
-class QuickBaseSAXParserThread extends Thread
+public class QuickBaseSAXParserThread extends Thread
 {
     private InputSource response;
     private QuickBaseResultHandler resultHandler;
@@ -40,7 +40,7 @@ class QuickBaseSAXParserThread extends Thread
      * @param response the {@link InputSource} received from QuickBase
      * @param resultHandler the client-supplied {@link QuickBaseResultHandler}
      */
-    QuickBaseSAXParserThread(InputSource response, QuickBaseResultHandler resultHandler)
+    public QuickBaseSAXParserThread(InputSource response, QuickBaseResultHandler resultHandler)
     {
         this.response = response;
         this.resultHandler = resultHandler;

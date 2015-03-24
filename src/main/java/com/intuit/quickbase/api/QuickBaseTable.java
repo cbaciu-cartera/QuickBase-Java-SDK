@@ -36,9 +36,9 @@ public class QuickBaseTable
     private Node table;
     private String tableId;
 
-    QuickBaseTable(QuickBaseDatabase database, Node table, String tableId)
+    protected QuickBaseTable(QuickBaseDatabase database, Node table, String tableId)
     {
-    	this.database = database;
+        this.database = database;
         this.table = table;
         this.tableId = tableId;
     }
@@ -61,7 +61,7 @@ public class QuickBaseTable
             XPathExpression xpath = QuickBaseXPath.compile(QuickBaseXPath.FIELDS_FIELD_LABEL, name);
             node = (Node)xpath.evaluate(table, XPathConstants.NODE);
             if (node == null) {
-            	throw new QuickBaseException("Field " + name + " was not found in table " + tableId);
+                throw new QuickBaseException("Field " + name + " was not found in table " + tableId);
             }
         }
         catch (XPathExpressionException xpathException)
@@ -70,62 +70,62 @@ public class QuickBaseTable
         }
         Node idAttribute = node.getAttributes().getNamedItem(ID);
         if (idAttribute == null || idAttribute.getNodeValue() == null) {
-        	throw new QuickBaseException("Field " + name + " was not found in table " + tableId);
+            throw new QuickBaseException("Field " + name + " was not found in table " + tableId);
         }
-		int id = Integer.parseInt(idAttribute.getNodeValue());
+        int id = Integer.parseInt(idAttribute.getNodeValue());
         return new QuickBaseField<$FieldType>(id, resolver);
     }
 
     /**
      * Returns the {@link QuickBaseDatabase} that owns this table.
      */
-	public QuickBaseDatabase getDatabase() {
-		return database;
-	}
+    public QuickBaseDatabase getDatabase() {
+        return database;
+    }
 
-	/**
-	 * Adds a record whose field values are specified in a {@link QuickBaseRecordBuilder} to
-	 * this table.
-	 * 
-	 * @param recordBuilder
-	 * @throws QuickBaseException if an error occurrs communicating with QuickBase.
-	 */
-	public void addRecord(QuickBaseRecordBuilder recordBuilder) throws QuickBaseException {
-		
-		if (!recordBuilder.getTable().tableId.equals(tableId)) {
-			throw new IllegalArgumentException("RecordBuilder is not setup for use with this table");
-		}
-		List<NameValuePair> fieldValues = recordBuilder.getFieldValues();
-		String[] elements = new String[fieldValues.size()];
-		for (int i = 0; i < fieldValues.size(); i++) {
-			NameValuePair fieldValue = fieldValues.get(i);
-			
-			StringBuffer b = new StringBuffer();
-			b.append("<field fid=\"");
-			b.append(fieldValue.getName());
-			b.append("\">");
-			b.append(fieldValue.getValue());
-			b.append("</field>");
-			
-			elements[i] = b.toString();
-		}
-		
-//		InputSource result;
-//		result = 
-		database.getConnection().executeXml(tableId, QuickBaseAPICall.API_AddRecord, elements);
+    /**
+     * Adds a record whose field values are specified in a {@link QuickBaseRecordBuilder} to
+     * this table.
+     * 
+     * @param recordBuilder
+     * @throws QuickBaseException if an error occurrs communicating with QuickBase.
+     */
+    public void addRecord(QuickBaseRecordBuilder recordBuilder) throws QuickBaseException {
+        
+        if (!recordBuilder.getTable().tableId.equals(tableId)) {
+            throw new IllegalArgumentException("RecordBuilder is not setup for use with this table");
+        }
+        List<NameValuePair> fieldValues = recordBuilder.getFieldValues();
+        String[] elements = new String[fieldValues.size()];
+        for (int i = 0; i < fieldValues.size(); i++) {
+            NameValuePair fieldValue = fieldValues.get(i);
+            
+            StringBuffer b = new StringBuffer();
+            b.append("<field fid=\"");
+            b.append(fieldValue.getName());
+            b.append("\">");
+            b.append(fieldValue.getValue());
+            b.append("</field>");
+            
+            elements[i] = b.toString();
+        }
+        
+//      InputSource result;
+//      result = 
+        database.getConnection().executeXml(tableId, QuickBaseAPICall.API_AddRecord, elements);
 
-//    	InputStream byteStream = result.getByteStream();
-//    	int n = 0;
-//    	try {
-//    		while ((n = byteStream.read()) != -1)
-//    		{
-//    			System.err.write(n);
-//    		}
-//    	} catch (IOException e) {
-//    		// TODO Auto-generated catch block
-//    		e.printStackTrace();
-//    	}
-	}
-	   
+//      InputStream byteStream = result.getByteStream();
+//      int n = 0;
+//      try {
+//          while ((n = byteStream.read()) != -1)
+//          {
+//              System.err.write(n);
+//          }
+//      } catch (IOException e) {
+//          // TODO Auto-generated catch block
+//          e.printStackTrace();
+//      }
+    }
+       
     
 }

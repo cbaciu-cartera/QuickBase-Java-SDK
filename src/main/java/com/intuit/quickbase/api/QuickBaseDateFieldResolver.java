@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2009 Intuit Inc. All Rights reserved.
+ * -------------------------------------------------------------------------------------------------
+ *
+ * File name  : QuickBaseDateFieldResolver.java
+ * -------------------------------------------------------------------------------------------------
+ *
+ *
+ * *************************************************************************************************
+ */ 
+
 package com.intuit.quickbase.api;
 
 import java.text.ParseException;
@@ -12,28 +23,28 @@ import java.util.Date;
  */
 public class QuickBaseDateFieldResolver implements QuickBaseFieldResolver<Date> {
 
-	private SimpleDateFormat simpleDateFormat;
-	
-	public QuickBaseDateFieldResolver(String formatStr) {
-		simpleDateFormat = new SimpleDateFormat(formatStr);
-	}
-	
-	@Override
-	public Date resolve(String str) {
-		try 
-		{
-			return simpleDateFormat.parse(str);
-		} catch (ParseException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}
-	
-	@Override
-	public String toString(Date field) {
-		if (field == null) {
-			return null;
-		}
-		return simpleDateFormat.format(field);
-	}
-	
+    private SimpleDateFormat simpleDateFormat;
+    
+    public QuickBaseDateFieldResolver(String formatStr) {
+        simpleDateFormat = new SimpleDateFormat(formatStr);
+    }
+    
+    @Override
+    public Date resolve(String str) {
+        try 
+        {
+            return simpleDateFormat.parse(str);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+    
+    @Override
+    public String toString(Date field) {
+        if (field == null) {
+            return null;
+        }
+        return simpleDateFormat.format(field);
+    }
+    
 }

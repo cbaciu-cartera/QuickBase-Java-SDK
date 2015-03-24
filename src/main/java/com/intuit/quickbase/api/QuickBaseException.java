@@ -43,6 +43,17 @@ public class QuickBaseException extends Exception
     }
 
     /**
+     * Creates a new {@link QuickBaseException} with a specific message.
+     *
+     * @param message the exception message
+     */
+    public QuickBaseException(QuickBaseExceptionCode code)
+    {
+        
+        super(code.getDescription());
+    }
+
+    /**
      * Creates a new {@link QuickBaseException} with a nested exception.
      *
      * @param exception the nested exception

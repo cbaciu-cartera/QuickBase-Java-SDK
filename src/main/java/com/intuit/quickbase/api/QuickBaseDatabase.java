@@ -15,9 +15,12 @@ package com.intuit.quickbase.api;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
+
 import org.apache.commons.httpclient.NameValuePair;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
+
 import com.intuit.quickbase.api.query.CList;
 import com.intuit.quickbase.api.query.QueryExecutionMode;
 
@@ -71,18 +74,18 @@ public class QuickBaseDatabase
      */
     public QuickBaseSchema getSchema() throws QuickBaseException
     {
-        InputSource response = connection.execute(dbid, API_GetSchema);
+        Document response = connection.execute(dbid, API_GetSchema);
 //        InputStream byteStream = response.getByteStream();
 //        int n = 0;
 //        try {
-//			while ((n = byteStream.read()) != -1)
-//			{
-//				System.err.write(n);
-//			}
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+//          while ((n = byteStream.read()) != -1)
+//          {
+//              System.err.write(n);
+//          }
+//      } catch (IOException e) {
+//          // TODO Auto-generated catch block
+//          e.printStackTrace();
+//      }
         try
         {
             Node qdbapi = (Node)QuickBaseXPath.QDBAPI.evaluate(response, XPathConstants.NODE);
@@ -101,14 +104,18 @@ public class QuickBaseDatabase
      * they become available and does not require the client code to wait until the complete
      * result set was received.
      *
+     * THIS METHOD DOES NOT WORK WITH HTTP-CLIENT VERSION 3.1
+     *
      * @param resultHandler a {@link QuickBaseResultHandler} that processes the results
      * @param clist a {@link CList} that specifies which fields are included in the results
      * @throws QuickBaseException if a problem occurred while communicating with the database
      */
-    public void doQuery(QuickBaseResultHandler resultHandler, CList clist, QueryExecutionMode mode) throws QuickBaseException
-    {
-        doQuery(resultHandler, EMPTY, clist, mode);
-    }
+/*
+ *   public void doQuery(QuickBaseResultHandler resultHandler, CList clist, QueryExecutionMode mode) throws QuickBaseException
+ *   {
+ *       doQuery(resultHandler, EMPTY, clist, mode);
+ *   }
+ */
 
     /**
      * Performs a query that returns matching records from the database.
@@ -117,41 +124,46 @@ public class QuickBaseDatabase
      * they become available and does not require the client code to wait until the complete
      * result set was received.
      *
+     * THIS METHOD DOES NOT WORK WITH HTTP-CLIENT VERSION 3.1
+     *
      * @param resultHandler a {@link QuickBaseResultHandler} that processes the results
      * @param query the query string
      * @param clist a {@link CList} that specifies which fields are included in the results
      * @throws QuickBaseException if a problem occurred while communicating with the database
      */
-    public void doQuery(QuickBaseResultHandler resultHandler, String query, CList clist, QueryExecutionMode mode) throws QuickBaseException
-    {
-    	InputSource result;
-    	result = connection.execute(dbid, API_DoQuery, FMT_STRUCTURED, query(query), clist(clist));
-//    	InputStream byteStream = result.getByteStream();
-//    	int n = 0;
-//    	try {
-//    		while ((n = byteStream.read()) != -1)
-//    		{
-//    			System.err.write(n);
-//    		}
-//    	} catch (IOException e) {
-//    		// TODO Auto-generated catch block
-//    		e.printStackTrace();
-//    	}
-
-    	QuickBaseSAXParserThread thread = new QuickBaseSAXParserThread(result, resultHandler);
-    	thread.start();
-    	if (mode == QueryExecutionMode.synchronous) {
-    		try {
-    			thread.join();
-    		} catch (InterruptedException e) {
-    		}
-    	}
-    	
-    }
+/*
+ *   public void doQuery(QuickBaseResultHandler resultHandler, String query, CList clist, QueryExecutionMode mode) throws QuickBaseException
+ *   {
+ *       InputSource result;
+ *       result = connection.execute(dbid, API_DoQuery, FMT_STRUCTURED, query(query), clist(clist));
+ *       
+ *       // InputStream byteStream = result.getByteStream();
+ *       // int n = 0;
+ *       // try {
+ *       //     while ((n = byteStream.read()) != -1)
+ *       //     {
+ *       //         System.err.write(n);
+ *       //     }
+ *       // } catch (IOException e) {
+ *       //     // TODO Auto-generated catch block
+ *       //     e.printStackTrace();
+ *       // }
+ * 
+ *       QuickBaseSAXParserThread thread = new QuickBaseSAXParserThread(result, resultHandler);
+ *       thread.start();
+ *       if (mode == QueryExecutionMode.synchronous) {
+ *           try {
+ *               thread.join();
+ *           } catch (InterruptedException e) {
+ *           }
+ *       }
+ *       
+ *   }
+ */
 
     QuickBaseConnection getConnection() {
-		return connection;
-	}
+        return connection;
+    }
     
     //-------------------------------------- PRIVATE SECTION -------------------------------------//
 
