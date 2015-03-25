@@ -5,7 +5,7 @@
 
     <groupId>com.intuit</groupId>
     <artifactId>quickbase-api</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>QuickBase Java SDK</name>
@@ -22,7 +22,8 @@
         <url>https://github.com/CarteraCommerce/QuickBase-Java-SDK</url>
         <connection>scm:git:git://github.com/CarteraCommerce/QuickBase-Java-SDK.git</connection>
         <developerConnection>scm:git:git@github.com:CarteraCommerce/QuickBase-Java-SDK.git</developerConnection>
-    </scm>
+      <tag>QuickBase-Java-SDK-1.0.2</tag>
+  </scm>
 
     <build>
         <plugins>
